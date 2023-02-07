@@ -12,6 +12,7 @@ const io = socketio(server);
 
 const userRoute = require('./routes/userRoute')
 const User = require('./model/user');
+const { use } = require("./routes/userRoute")
 
 const SERVER_PORT = process.env.PORT || 8080
 
@@ -23,38 +24,7 @@ app.use("/css",express.static(__dirname + '/css'));
 
 
 io.on('connection', (socket) => {
-    
-  const joinMsg = {
-      msg: 'Welcome',
-      name: 'SERVER'
-  }
-  socket.emit('joinMsg', joinMsg)
-
-  socket.on('joinRoom', (room) => {
-      socket.join(room)
-  })
-
-  socket.on('sendMsg', (data) => {
-      const msg = {
-          msg: data.message,
-          name: data.username
-      }
-      socket.broadcat.to(data.room).emit('msg', msg)
-  })
-
-  socket.on("typing", () => {
-      socket.broadcast.emit("typing", {user: socket.username})
-  })
-
-  
-  socket.on("disconnect", () => {
-      const byeMsg = {
-          msg: `The USER has left`,
-          name: 'SERVER'
-      }
-      console.log("byeee")
-      socket.broadcast.emit("byeMsg", byeMsg)
-  })
+ 
 
 })
 
@@ -102,12 +72,12 @@ app.post('/register', async(req,res) => {
 
 app.post('/login', async (req, res) => {
   const user = await User.findOne({username: req.body.username, password: req.body.password})
-  console.log(user)
   try {
       if(user != null){
           res.sendFile(__dirname + "/room.html")
-      }else{
-        res.send(JSON.stringify({status:false, message: "No user found"}))
+      }
+      else{
+        res.send(JSON.stringify({status:false, message: "No user found or incorrect username or password"}))
       }
     } catch (err) {
       res.status(500).send(err);

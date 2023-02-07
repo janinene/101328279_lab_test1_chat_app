@@ -27,6 +27,8 @@ routes.post('/register', async(req,res) => {
                 res.status(500)
                     .send({ message:  err.message || "Some error occurred while creating the Account Details." })
             })
+
+    res.sendFile(__dirname, '/login.html')
 })
 
 

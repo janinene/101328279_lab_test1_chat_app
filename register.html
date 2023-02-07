@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 
 <style>
     main {
@@ -26,21 +26,20 @@
     <main>  
         <form action="/register" method="post">
             <div class="form-group">
-                <label for="inputEmail4">Username</label>
-                <input type="text" class="form-control" id="inputEmail4" placeholder="Username">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
             </div>
             <div class="form-group">
-                <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-            </div>
-            </div>
-            <div class="form-group">
-            <label for="inputAddress">First Name</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="First name" required>
+                <label for="firstname">First Name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First name" required>
             </div>
             <div class="form-group">
-            <label for="inputAddress2">Last Name</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Last Name" required>
+                <label for="lastname">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
         
             <button type="submit" class="btn btn-primary">Sign Up</button>

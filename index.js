@@ -9,12 +9,14 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const userRoute = require('./routes/userRoute')
+const User = require('./model/user');
 
 const SERVER_PORT = process.env.PORT || 8080
 
 // ===== Middlewares =====
 app.use(cors());
 app.use(express.json())
+app.use(express.static(__dirname + 'public'));
 
 
 // ===== Mongoose Connection =====
@@ -31,7 +33,7 @@ mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTop
     });
 
 
-app.use('/', userRoute)
+// app.use('/', userRoute)
 
 // ===== Route =====
 app.get(['/', '/login'], (req, res) => {
@@ -39,4 +41,27 @@ app.get(['/', '/login'], (req, res) => {
 })
 app.get('/register', (req, res) => {
     res.sendFile(__dirname + '/register.html')
+})
+
+
+
+// ===== Model Route =====
+app.post('/register', async(req,res) => {
+    if (!req.body) {
+        res.status(400).send({ message: "Content cannot be empty!"})
+    }
+    const user_content = new User(req.body)
+
+    try {
+        await user_content.save((err) => {
+          if(err){
+            res.send(err)
+          }else{
+            res.sendFile(__dirname + '/login.html')
+          }
+        });
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    res.sendFile(__dirname + '/login.html')
 })

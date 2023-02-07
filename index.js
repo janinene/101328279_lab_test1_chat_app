@@ -10,9 +10,7 @@ const socketio = require("socket.io");
 const server = http.createServer(app);
 const io = socketio(server);
 
-const userRoute = require('./routes/userRoute')
 const User = require('./model/user');
-const { use } = require("./routes/userRoute")
 
 const SERVER_PORT = process.env.PORT || 8080
 
@@ -38,7 +36,6 @@ mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTop
       })
 
 
-// app.use("/", userRoute)
 
 
 // ===== Route =====
